@@ -1,0 +1,60 @@
+.border-bottom{
+    --bs-border-color: aqua;
+}
+hr{
+    color: aqua;
+}
+header{
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 100;
+}
+footer{
+    border-top: 1px solid aqua;
+}
+.text-white{
+    font-size: 1.2rem;
+}
+.nav-link{
+    font-size: 1rem;
+}
+
+@media (min-width: 768px) {
+    .carousel-item-end.active, .carousel-item-next {
+        transform: translateX(50%);
+    }
+
+    .carousel-item-start.active, .carousel-item-prev {
+        transform: translateX(-50%);
+    }
+    .carousel-inner .card{
+        max-width: 50%;
+    }
+    .carousel-item-end, .carousel-item-start {
+        transform: translateX(0);
+    }
+
+    .carousel-item.active + .carousel-item:not(.carousel-item-start):not(.carousel-item-end ~ .carousel-item){
+        display: block;
+        transform: translateX(50%);
+    }
+    /* .carousel-item:first-child:not(.active):not(.carousel-item:last-child.active):not(.carousel-item-start){
+        display: block;
+        transform: translateX(50%);
+    } */
+}
+
+.carousel-control-prev:hover{
+    background: linear-gradient(90deg, #0888, #fff0);
+    border-radius: 30px;
+}
+
+.carousel-control-next:hover{
+    background: linear-gradient(-90deg, #0888, #fff0);
+    border-radius: 30px;
+}
+
+.rounded-6{
+    border-radius: 100px;
+}
