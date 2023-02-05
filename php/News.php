@@ -1,67 +1,60 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
     <?php
-    $title = "SSSite";
-    $page_css ="News.css";
+        $title = "SSSite";
+        $pageСss ="News.css";
     ?>
     <?php require_once "../blocks/head.php"?>
 
 </head>
-<body class="bg-black">
-<header>
-    <div class="px-3 py-2 bg-black border-bottom">
-        <div class="container">
-            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-                <a href="Main.php" class="navbar-brand my-2 me-lg-auto text-white">SSS IMIT</a>
-                <ul class="nav col-lg-auto my-2 justify-content-center">
-                    <li class="nav-item">
-                        <a href="VkGroup.php" class="nav-link text-white">
-                            Наша группа ВК
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="News.php" class="nav-link">
-                            Новости
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="CardGame.php" class="nav-link text-white">
-                            Карточная игра
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="Market.php" class="nav-link text-white">
-                            Магазин
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="Tasks.php" class="nav-link text-white">
-                            Задания
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="Profile.php" class="nav-link text-white">
-                            Профиль
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <!-- <div class="px-3 py-2 border-bottom mb-3">
-    <div class="container d-flex flex-wrap justify-content-center">
-        <div class="text-end">
-        <button type="button" class="btn btn-light text-dark me-2">Login</button>
-        <button type="button" class="btn btn-primary">Sign-up</button>
-        </div>
-    </div>
-    </div>     -->
-</header>
+<body <!--class="bg-black"-->>
+<?php
+$name = basename(__FILE__);
+require_once  "../blocks/header.php"
+?>
+<!-- блок ввода новостей -->
+<!--<div class="row bg-light">
+    <form name="form1" method="post" action="<? echo $PHP_SELF; ?>">
+        <table width="50%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <td width="50%">Name</td>
+                <td><input name="name" type="text" id="name"></td>
+            </tr>
+            <tr>
+                <td>Email</td>
+                <td><input name="email" type="text" id="email"></td>
+            </tr>
+            <tr>
+                <td> </td>
+                <td> </td>
+            </tr>
+            <tr>
+                <td>Headline</td>
+                <td><input name="headline" type="text" id="headline"></td>
+            </tr>
+            <tr>
+                <td>News Story</td>
+                <td><textarea name="story" id="story"></textarea></td>
+            </tr>
+            <tr>
+                <td colspan="2"><div align="center">
+                        <input name="hiddenField" type="hidden" value="add_n">
+                        <input name="add" type="submit" id="add" value="Submit">
+                    </div></td>
+            </tr>
+        </table>
+    </form>
+</div>-->
+<!-- блок с новостями-->
+<div class="row">
+
+</div>
 
 
 
-<?php require_once "../blocks/footer.php"?>
-
+<!--<?php require_once "../blocks/footer.php"?>-->
+<script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
+<script src="../node_modules/@popperjs/core/dist/umd/popper.min.js"></script>
 </body>
 </html>

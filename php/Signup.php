@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <?php
-    $title = "SSSite";
-    $pageСss ="main.css";
+        $title = "SSSite";
+        $pageСss ="main.css";
     ?>
     <?php require_once "../blocks/head.php"?>
 </head>
