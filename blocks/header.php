@@ -34,16 +34,17 @@
                             Профиль
                         </a>
                     </li>
+                    <?php
+                    if($_SESSION['admin_lvl'] >1):
+                    ?>
+                    <li class="nav-item">
+                        <a href="Admin.php" class="nav-link <?php if(($name != "Admin.php") and ($name != "addNews.php")) echo "text-white"?>">
+                            Админка
+                        </a>
+                    </li>
+                    <?php endif;?>
                 </ul>
             </div>
         </div>
     </div>
-    <!-- <div class="px-3 py-2 border-bottom mb-3">
-    <div class="container d-flex flex-wrap justify-content-center">
-        <div class="text-end">
-        <button type="button" class="btn btn-light text-dark me-2">Login</button>
-        <button type="button" class="btn btn-primary">Sign-up</button>
-        </div>
-    </div>
-    </div>     -->
 </header>

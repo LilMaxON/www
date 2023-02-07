@@ -1,14 +1,13 @@
 <?php
 	$mysqli = false;
-	function connectDB () {
+
+	function connectDB (string $baseName):void {
 		global $mysqli;
-		$mysqli = new mysqli("localhost", "root", "", "newsbase");
+		$mysqli = new mysqli("localhost", "root", "", $baseName);
 		#mysqli->query("SET NAMES 'utf-8'");
 	}
 
-	function closeDB () {
+	function closeDB ():void {
 		global $mysqli;
 		$mysqli->close();
-		
 	}
-?>
