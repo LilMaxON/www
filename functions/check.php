@@ -1,19 +1,14 @@
-<?php //'login' - то, что, написано в input name=
+<?php
     header('Content-Type: text/html; charset=UTF-8');
-    //require_once "data.php"; //нужно
     session_start();
     $login = filter_var(trim($_POST['login']), FILTER_SANITIZE_EMAIL);
     $pass = filter_var(trim($_POST['password']),FILTER_SANITIZE_EMAIL);
-    //$name = filter_var(trim($_POST['name']),FILTER_SANITIZE_ENCODED);
     $mail = filter_var(trim($_POST['e-mail']),FILTER_VALIDATE_EMAIL);
     $ticket = filter_var(trim($_POST['sd_ticket']),FILTER_SANITIZE_EMAIL);
-    //$surname = filter_var(trim($_POST['surname']),FILTER_SANITIZE_ENCODED);
     $name = $_POST['name'];
     $surname = $_POST['surname'];
 
-    /*filtervar нужен, чтобы предотвратить взлом через sql инъекции. Поэтому как-то, но фильтровать всегда надо*/
-//mysql_escape - защита от склю инъекций, но работает, только если мы подключены к бд, но он устарел опять. усука
-    //$login = $_POST['login'];
+//проверки
 if(mb_strlen($login) <5 || mb_strlen($login) > 90 )
     {
         echo "Логин должен содержать не менее 5 символов и не более 90";
@@ -40,7 +35,6 @@ elseif (mb_strlen($surname) >30)
         echo "Фамилия слегка длинновата, вам не кажется?";
         exit();
     }
-//проверки
     $admin_level = (int)1;
     $pass = md5($pass."pjustl34d9sf");
     $mysql = new mysqli("localhost", "root", "", 'register-bd');
@@ -52,10 +46,8 @@ elseif (mb_strlen($surname) >30)
     $_SESSION['user_mail'] = $mail;
     $_SESSION['user_pass'] = $pass;
     $_SESSION['user_name'] = $name;
-    //$mysql->query("SET NAMES utf8");
-    //$result = $mysql->query("SELECT * FROM `users` WHERE `user_volsu` = '$mail' AND `user_pass` = '$pass'");
-    //$user = $result->fetch_assoc();
-    //echo $_SESSION['admin_lvl'];
-    //setcookie('user', $user['user_name'], time() + 3600*365, "/");
     $mysql->close();
-    header('Location: ../php/Profile.php');
+ob_start();
+header('Location: ../php/Profile.php');
+exit();
+ob_end_flush();

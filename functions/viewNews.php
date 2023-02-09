@@ -1,80 +1,77 @@
-<?php //'login' - то, что, написано в input name=
-
-
-
-//header('Content-Type: text/html; charset=UTF-8');
-//require_once "data.php"; //нужно
+<?php
+$mysql = new mysqli("localhost", "root", "", 'newsbase');
+$mysql->query("SET NAMES utf8");
+// Проверяем соединение
+if ($mysql->connect_error) {
+    die("Connection failed: " . $mysql->connect_error);
+}
+//echo "Connected successfully";
+$id = $_POST['id'];
+$sqlquery = "SELECT * FROM `news` WHERE id= '$id'";
+$res = $mysql->query($sqlquery);
+$data = $res->fetch_assoc();
+$mysql->close();
 session_start();
-ob_end_clean();
-$image = $_POST['file'];
-$news_title = $_POST['news-title'];
-$sh_text = $_POST['intro-text'];
-$fl_text = $_POST['full-text'];
+header('Content-Type: text/html; charset=UTF-8');
+
+$image = $data['image'];
+$news_title = $data['title'];
+$sh_text = $data['intro_text'];
+$fl_text = $data['full_text'];
+$src_link = $data['source_link'];
+$date = $data['date'];
 ?>
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <?php
+    $title = "SSSite";
+    $pageСss ="News.css";
+    ?>
+    <?php require_once "../blocks/head.php"?>
+</head>
+<body class="bg-black">
+<?php
+$name = basename(__FILE__);
+require_once  "../blocks/func_header.php"
+?>
+<main>
     <div class="container news_bar">
         <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-indicators">
-                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 0"></button>
-            </div>
             <div class="carousel-inner">
                 <div class="carousel-item active">
                     <div class="row">
-                        <div class="col-6">
-                            <!--<img class="card-img-bottom" src="../images/fact.jpg">-->
-                            <!--<script>
-                                function readImage(file) {
-                                    // Check if the file is an image.
-                                    if (file.type && !file.type.startsWith('image/')) {
-                                        console.log('File is not an image.', file.type, file);
-                                        return;
-                                    }
-                                    const reader = new FileReader();
-                                    reader.addEventListener('load', (event) => {
-                                        img.src = event.target.result;
-                                    });
-                                    reader.readAsDataURL(file);
-                                }
-                            </script>-->
-                            <!--document.getElementById('picField').onchange = function (evt) {
-                            var tgt = evt.target || window.event.srcElement,
-                            files = tgt.files;
-
-                            // FileReader support
-                            if (FileReader && files && files.length) {
-                            var fr = new FileReader();
-                            fr.onload = function () {
-                            document.getElementById(outImage).src = fr.result;
-                            }
-                            fr.readAsDataURL(files[0]);
-                            }
-
-
-                            <img src="$image" class="rounded shadow img-fluid" alt="" srcset="">
-                            <img src="data:image/jpeg;base64,' . $data[$i]['image'] . '" class="rounded shadow img-fluid" alt="" srcset="">-->
+                        <div class="col-6 wrapper">
+                            <img src="data:image/jpeg;base64,<?=$data['image']?>" class=" card-img-bottom rounded shadow img-fluid" alt="" srcset="">
                         </div>
                         <div class="col-6">
-                            <h5><?php echo " $news_title"; ?></h5>
-                            <p><?php echo "$sh_text";?></p>
-                            <p><?php echo "$fl_text";?></p>
-
+                            <div class="card-body">
+                                <h1 class="card-title"><?php $news_title?></h1>
+                                <p><?= $fl_text?></p>
+                                <p><?=$date?></p>
+                                <?php if($_SESSION['admin_lvl'] >= 2)
+                                {?>
+                                    <p><?=$id?></p>
+                                <?php }?>
+                                <a class="btn btn-primary" href="<?=$src_link?>">Ссылка на пост в группе в вк</a>
+                            </div>
                         </div>
+
                     </div>
                 </div>
             </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"  data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Предыдущий</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"  data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Следующий</span>
-            </button>
         </div>
     </div>
-    <!--<p>Изменить новость<a href="../functions/addNews.php">Изменить</a></p>-->
+    <?php if($_SESSION['admin_lvl'] >= 2):?>
+        <button onclick="document.location='../functions/editNews.php'"> Изменить новость</button>
+        <button onclick="document.location='../functions/removeNews.php'"> Удалить новость</button>
+    <?php endif;?>
 
-<?php ob_start();
-$image = $_POST['file'];
-$news_title = $_POST['news-title'];
-$sh_text = $_POST['intro-text'];
-$fl_text = $_POST['full-text'];?>
+</main>
+<?php //require_once "../blocks/footer.php"?>
+
+<script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
+<script src="../node_modules/@popperjs/core/dist/umd/popper.min.js"></script>
+</body>
+</html>

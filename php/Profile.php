@@ -7,7 +7,6 @@
         $pageСss ="main.css";
     ?>
     <?php require_once "../blocks/head.php"?>
-    <?php require_once "../functions/data.php"?>
 </head>
 <body class="bg-black">
 <?php

@@ -22,21 +22,6 @@
     <div class="col-1"></div>
     <div class="col-10">
         <main class="container">
-            <!-- <div class="text-center py-5"><h1 class="display-4 fw-normal text-white">СНО ИМИТ</h1></div>
-             <div class="card text-bg-dark rounded-5">
-                 <div class="row">
-                     <div class="col">
-                         <img src="../images/IMG_2623.JPG" class="img-fluid  rounded-5" alt="...">
-                     </div>
-                     <div class="col">
-                         <div class="card-body">
-                             <h2 class="card-title">Наш доблестный Император</h2>
-                             <p class="card-text">В прошедшую пятницу наш величественный Император повел нас в Великий поход. Преодолевая все трудности, мы шли месяц. И вот, когда наши запасы были на исходе, наш великодушный Император вывел нас к Великой реке.</p>
-                         </div>
-                     </div>
-                 </div>
-             </div>
--->
             <hr class="my-5 mx-0">
 
             <div class="text-center"><h1 class="display-4 fw-normal text-white">Рубрики нашего ВК</h1></div>

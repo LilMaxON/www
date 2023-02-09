@@ -7,7 +7,6 @@
     $pageСss ="main.css";
     ?>
     <?php require_once "../blocks/head.php"?>
-    <?php require_once "../functions/data.php"?>
 </head>
 <body class="bg-black">
 <?php
@@ -15,11 +14,11 @@ $name = basename(__FILE__);
 require_once  "../blocks/header.php"
 ?>
 <?php
-if($_SESSION['admin_lvl'] == 2):?>
+if($_SESSION['admin_lvl'] >= 2):?>
 <div>
-    <p>Привет, чертила</p>
-    <?php require_once  "../functions/addNews.php"?>
-
+    <button onclick="window.location.href = '/functions/addNews.php';">Добавить новость</button>
+    <button onclick="window.location.href = '/functions/editNews.php';">Изменить новость</button>
+    <button onclick="window.location.href = '/functions/removeNews.php';">Удалить новости</button>
 </div>
 <?php
 endif;

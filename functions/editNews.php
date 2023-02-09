@@ -1,122 +1,95 @@
-<html>
+<?php session_start();
+?>
+<!DOCTYPE html>
+<html lang="ru">
 <head>
-    <title>Edit News</title>
-    <meta http-equiv="Content-Type" content="text/html; charset="iso"-8859-1">
-</head>
-
-<body>
-<?
-if(!isset($a){
-$link = @mysql_connect(localhost, username, password);
-if(!$link){
-   echo('Error connecting to the database: ' . $mysql_error());
-   exit();
-}
-$db = @mysql_selectdb('mydatabase');
-if(!$db){
-   echo('Error selecting database: ' . $mysql_error());
-   exit();
-}
-$query = "SELECT id, headline, timestamp FROM news ORDER BY timestamp DESC";
-$result = @mysql_query($query);
-if(!$result){
-   echo('Error selecting news: ' . $mysql_error());
-   exit();
-}
-if (mysql_num_rows($result) > 0){
-    while($row = mysql_fetch_object($result))
-    {
+    <?php
+    $title = "SSSite";
+    $pageСss ="main.css";
     ?>
-<font size="-1"><b><? echo $row->headling; ?></b> <i><? echo formatDate($row->timestamp); ?></i></font>
-<br>
-<font size="-2"><a href="edit.php?a=edit&id=<? echo $row->id; ?>">edit</a> |
-    <a href="edit.php?a=delete&id=<? echo $row->id; ?>">delete</a></font>
-<?
-}else{
+    <?php require_once "../blocks/head.php"?>
+</head>
+<body class="bg-black">
+<?php
+$name = basename(__FILE__);
+require_once  "../blocks/func_header.php"
 ?>
-<font size="-2">No news in the database</font>
-<? }
-mysql_close($link);
-}elseif($a == 'edit'){
-if(!isset($update)){
-$link = @mysql_connect(localhost, username, password);
-if(!$link){
-    echo('Error connecting to the database: ' . $mysql_error());
-    exit();
-}
-$db = @mysql_selectdb('mydatabase');
-if(!$db){
-    echo('Error selecting database: ' . $mysql_error());
-    exit();
-}
-$query = "SELECT name, email, headline, story FROM news WHERE id = '$id'";
-$result = @mysql_query($query);
-if(!$result){
-    echo('Error selecting news item: ' . $mysql_error());
-    exit();
-}
-mysql_fetch_object($result);
-?>
-<form name="form1" method="post" action="edit.php?a=edit&id=<? echo($id) ?>&update=1">
-    <table width="50%" border="0" cellspacing="0" cellpadding="0">
-        <tr>
-            <td width="50%">Name</td>
-            <td><input name="name" type="text" id="name" value="<? echo($row->name) ?>"></td>
-        </tr>
-        <tr>
-            <td>Email</td>
-            <td><input name="email" type="text" id="email" value="<? echo($row->email) ?>"></td>
-        </tr>
-        <tr>
-            <td> </td>
-            <td> </td>
-        </tr>
-        <tr>
-            <td>Headline</td>
-            <td><input name="headline" type="text" id="headline" value="<? echo($row->headline) ?>"></td>
-        </tr>
-        <tr>
-            <td>News Story</td>
-            <td><textarea name="story" id="story" value="<? echo($row->story) ?>"></textarea></td>
-        </tr>
-        <tr>
-            <td colspan="2"><div align="center">
-                    <input name="hiddenField" type="hidden" value="update">
-                    <input name="add" type="submit" id="add" value="Update">
-                </div></td>
-        </tr>
-    </table>
-</form>
-<?
-}else{
-    $query = "UPDATE news SET name = '$name, email = '$email', headline = '$headline', story = '$story', timestamp = NOW() WHERE id = '$id';
-$result = @mysql_query($query);
-if(!$result){
-   echo('Error updating news item: ' . $mysql_error());
-   exit();
-}else{
-   mysql_close($link);
-   echo('Update successful!');
- }
-}elseif($a == 'delete'){
-$link = @mysql_connect(localhost, username, password);
-if(!$link){
-   echo('Error connecting to the database: ' . $mysql_error());
-   exit();
-}
-$db = @mysql_selectdb('mydatabase');
-if(!$db){
-   echo('Error selecting database: ' . $mysql_error());
-   exit();
-}
-$query = "DELETE FROM news WHERE id = '$id'";
-$result = @mysql_query($query);
-if(!$result){
-   echo('Error deleteing news item: ' . $mysql_error());
-   exit();
-}
-mysql_close($link);
-echo('News item deleted.');
-} ?>
+<main>
+
+    <?php if(isset($_POST['hiddenField'])){
+        $mysql = new mysqli("localhost", "root", "", 'newsbase');
+        if($mysql->connect_error){
+            echo('Error connecting to database');
+            exit();
+        }
+        $mysql->query("SET NAMES utf8");
+        $id = $_POST['news-id'];
+        $sqlquery = "SELECT * FROM `news` WHERE id = '$id'";
+        $res = $mysql->query($sqlquery);
+        $data = $res->fetch_assoc();
+
+        $news_title = $data['title'];
+        $source_link = $data['source_link'];
+
+        $mysql->close();
+
+
+        ?>
+        <div class="col-8 text-bg-dark my-5 rounded-5 p-3 mx-auto">
+        <div class="text-white text-align-center"><h1 class="display-6 fw-normal">Lets change some news</h1></div>
+        <hr>
+        <form action="../functions/edit.php" method="post" enctype="multipart/form-data"> <!--внутри action записывается файл, который обрабатывает информацию из формочки-->
+            <div class="row">
+                <div class="col-4">
+                    <div class="input-group mb-3">
+                        <label for="file_label"> Добавьте изображение 550 на 550 px</label>
+                        <input type="file" id="image-file" name="image-file" accept=".jpg, .jpeg, .png">
+                    </div>
+
+                </div>
+                <div class="col">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id=""></span>
+                        <input type="text" class="form-control" placeholder="Заголовок" value="<?=$news_title?>"   name="news-title" aria-label="title" aria-describedby="">
+                        <input type="text" class="form-control" placeholder="Ссылка на пост или новость"  value="<?=$source_link?>"  name="news-link" aria-label="news-title" aria-describedby="">
+                    </div>
+                </div>
+            </div>
+            <div class="input-group mb-3">
+                <textarea name="intro-text" id="intro-text" placeholder="Интро новости" cols="250" rows="10"></textarea>
+            </div>
+            <div class="input-group mb-3">
+                <textarea name="full-text" id="full-text" placeholder="Новость" cols="250" rows="20"></textarea>
+            </div>
+            <input type="hidden" name="id" value="<?=$id?>">
+            <button type="submit"  class="btn btn-primary">Проверить как выглядит</button>
+        </form>
+    </div>
+
+    <?php
+
+
+    }else{
+    ?>
+        <div class="col-8 text-bg-dark my-5 rounded-5 p-3 mx-auto">
+            <div class="text-white text-align-center"><h1 class="display-6 fw-normal">Какую новость изменить</h1></div>
+            <hr>
+            <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post"> <!--внутри action записывается файл, который обрабатывает информацию из формочки-->
+                <div class="input-group mb-3">
+                    <label for="file_label"> Введите id нужной новости</label>
+                    <input type="text" id="news-id"  name="news-id">
+                </div>
+                <input name="hiddenField" type="hidden" value="add_n">
+                <button type="submit"  class="btn btn-primary">Изменить</button>
+            </form>
+        </div>
+        <?php } ?>
+
+
+</main>
+<?php //require_once "../blocks/footer.php"?>
+
+<script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
+<script src="../node_modules/@popperjs/core/dist/umd/popper.min.js"></script>
 </body>
-</html> <?php
+</html>

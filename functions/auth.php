@@ -1,5 +1,4 @@
 <?php
-    //require_once "data.php";
     header('Content-Type: text/html; charset=UTF-8');
     session_start();
     $login = filter_var(trim($_POST['login']), FILTER_SANITIZE_EMAIL);
@@ -22,7 +21,7 @@
     $_SESSION['user_pass'] = $user['user_pass'];
     $_SESSION['user_name'] = $user['user_name'];
 
-//setcookie('user', $user['user_name'], time() + 3600*365, "/");
-    //print_r($_COOKIE);
     $mysql->close();
-    header('Location: ../php/Profile.php');
+ob_start();
+header('Location: ../php/Profile.php');exit();
+ob_end_flush();
