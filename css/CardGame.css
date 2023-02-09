@@ -1,0 +1,17 @@
+.layer{
+    will-change: transform;
+    min-height: 100%;
+    min-width: 100%;
+    position: absolute;
+    background-size: cover;
+    background-position: center;
+    overflow: hidden;
+}
+.layers-base{
+    transform: translate3d(0, calc(var(--scrollTop)/1.5), 0);
+    z-index: -2;
+}
+.layers-front{
+    transform: translate3d(0, calc(var(--scrollTop)/2.5), 0);
+    z-index: -1;
+}
