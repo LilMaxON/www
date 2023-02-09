@@ -48,3 +48,4 @@
         </div>
     </div>
 </header>
+<?php require_once "../functions/bdConnects.php"?>

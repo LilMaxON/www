@@ -37,8 +37,9 @@ elseif (mb_strlen($surname) >30)
     }
     $admin_level = (int)1;
     $pass = md5($pass."pjustl34d9sf");
-    $mysql = new mysqli("localhost", "root", "", 'register-bd');
-    $mysql->query("SET NAMES utf8");
+
+    require_once "../functions/bdConnects.php";
+    $mysql=ConnectBD('register-bd');
     $mysql->query("INSERT INTO `users` (`user_login`, `user_pass`, `user_name`, `user_volsu`, `user_id_ticket`, `user_surname`, `admin_lvl`)
     VALUES ('$login','$pass','$name','$mail','$ticket','$surname', '$admin_level')");
 
@@ -46,8 +47,8 @@ elseif (mb_strlen($surname) >30)
     $_SESSION['user_mail'] = $mail;
     $_SESSION['user_pass'] = $pass;
     $_SESSION['user_name'] = $name;
-    $mysql->close();
-ob_start();
-header('Location: ../php/Profile.php');
-exit();
-ob_end_flush();
+    CloseBD($mysql);
+    ob_start();
+    header('Location: ../php/Profile.php');
+    exit();
+    ob_end_flush();

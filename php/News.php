@@ -16,17 +16,11 @@ require_once  "../blocks/header.php"
 ?>
 
 <?php
-$mysql = new mysqli("localhost", "root", "", 'newsbase');
-$mysql->query("SET NAMES utf8");
-// Проверяем соединение
-if ($mysql->connect_error) {
-    die("Connection failed: " . $mysql->connect_error);
-}
-//echo "Connected successfully";
+$mysql=ConnectBD('newsbase');
 $sqlquery = "SELECT * FROM `news`";
 $res = $mysql->query($sqlquery);
 $copyres = $mysql->query($sqlquery);
-
+CloseBD($mysql);
 echo '<div class="container news_bar">
             <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-indicators">';

@@ -6,9 +6,8 @@
     $mail = filter_var(trim($_POST['e-mail']),FILTER_VALIDATE_EMAIL);
 
     $pass = md5($pass."pjustl34d9sf");
-    $mysql = new mysqli("localhost", "root", "", 'register-bd');
-    $mysql->query("SET NAMES utf8");
-
+    require_once "../functions/bdConnects.php";
+    $mysql=ConnectBD('register-bd');
     $result = $mysql->query("SELECT * FROM `users` WHERE `user_volsu` = '$mail' AND `user_pass` = '$pass'");
     $user = $result->fetch_assoc();
     if(count($user) == 0)
@@ -20,8 +19,8 @@
     $_SESSION['user_mail'] = $user['user_volsu'];
     $_SESSION['user_pass'] = $user['user_pass'];
     $_SESSION['user_name'] = $user['user_name'];
-
-    $mysql->close();
-ob_start();
-header('Location: ../php/Profile.php');exit();
-ob_end_flush();
+    CloseBD($mysql);
+    ob_start();
+    header('Location: ../php/Profile.php');
+    exit();
+    ob_end_flush();

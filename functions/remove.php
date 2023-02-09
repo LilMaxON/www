@@ -1,9 +1,6 @@
 <?php
-$mysql = new mysqli("localhost", "root", "", 'newsbase');
-if($mysql->connect_error){
-echo('Error connecting to database');
-exit();
-}
+require_once "../functions/bdConnects.php";
+$mysql=ConnectBD('newsbase');
 $id = $_POST['news-id'];
 if(isset($_POST['news-date']))
 {
@@ -16,8 +13,7 @@ else{
 
 }
 $mysql->query($query);
-$mysql->close();
-//echo $id,$query;
+CloseBD($mysql);
 ob_start();
 header('Location: ../php/Main.php');
 exit();

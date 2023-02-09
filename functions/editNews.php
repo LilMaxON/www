@@ -17,12 +17,8 @@ require_once  "../blocks/func_header.php"
 <main>
 
     <?php if(isset($_POST['hiddenField'])){
-        $mysql = new mysqli("localhost", "root", "", 'newsbase');
-        if($mysql->connect_error){
-            echo('Error connecting to database');
-            exit();
-        }
-        $mysql->query("SET NAMES utf8");
+        require_once "../functions/bdConnects.php";
+        $mysql=ConnectBD('newsbase');
         $id = $_POST['news-id'];
         $sqlquery = "SELECT * FROM `news` WHERE id = '$id'";
         $res = $mysql->query($sqlquery);
@@ -30,8 +26,7 @@ require_once  "../blocks/func_header.php"
 
         $news_title = $data['title'];
         $source_link = $data['source_link'];
-
-        $mysql->close();
+        CloseBD($mysql);
 
 
         ?>

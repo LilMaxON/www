@@ -1,16 +1,13 @@
 <?php
-$mysql = new mysqli("localhost", "root", "", 'newsbase');
-$mysql->query("SET NAMES utf8");
-// Проверяем соединение
-if ($mysql->connect_error) {
-    die("Connection failed: " . $mysql->connect_error);
-}
-//echo "Connected successfully";
+
+require_once "../functions/bdConnects.php";
+$mysql=ConnectBD('newsbase');
+
 $id = $_POST['id'];
 $sqlquery = "SELECT * FROM `news` WHERE id= '$id'";
 $res = $mysql->query($sqlquery);
 $data = $res->fetch_assoc();
-$mysql->close();
+CloseBD($mysql);
 session_start();
 header('Content-Type: text/html; charset=UTF-8');
 
